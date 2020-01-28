@@ -64,11 +64,11 @@ Game.prototype.startLoop = function() {
     // if (Math.random() > 0.97) {
     //   this.enemySpawn();
     // }
-    if (Math.random() > 0.97) {
+    if (Math.random() > 0.98) {
       var randomNum = Math.random();
-      if (randomNum > 0.9) {
+      if (randomNum > 0.2 && randomNum < 0.6) {
         this.enemySpawn("./img/car1.png");
-      } else if (randomNum > 0.1) {
+      } else if (randomNum > 0.6 && randomNum < 1) {
         this.truckSpawn("./img/truck1.png");
       }
     }
