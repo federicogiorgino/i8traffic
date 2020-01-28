@@ -83,55 +83,6 @@ body {
   flex: 1;
 }
 
-.splash-screen-main {
-  height: 1180px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url("https://miro.medium.com/max/3000/1*pBXdKxuvv5h-zBTioDE1PQ.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-.splash-screen-div {
-  margin-top: 300px;
-  /* margin-right: 50%; */
-  padding: 0px 30px 40px 30px;
-  font-size: 1.5rem;
-  background: #4f4e4e;
-  border-radius: 15px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  font-family: poppins;
-  color: white;
-}
-
-.splash-h1 {
-  font-family: "Press Start 2P", cursive;
-  font-size: 4rem;
-  color: red;
-  padding-top: 30px;
-}
-
-.splash-screen-div p {
-  padding: 10px;
-}
-
-.start-button {
-  margin-top: 80px;
-  padding: 20px;
-  width: 200px;
-  font-size: 28px;
-  font-family: Poppins;
-  font-weight: bold;
-  border-radius: 5%;
-  cursor: pointer;
-  background-color: whitesmoke;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  text-transform: uppercase;
-}
-
 .game-over-screen {
   height: 1180px;
   text-align: center;
@@ -148,7 +99,6 @@ body {
   height: auto;
   width: 1000px;
   margin-top: 300px;
-  /* margin-right: 50%; */
   padding: 0px 30px 40px 30px;
   font-size: 1.5rem;
   background: #4f4e4e;
@@ -187,4 +137,62 @@ body {
   font-size: 2rem;
   color: green;
   text-transform: uppercase;
+}
+
+* {
+  background-color: #4f4e4e;
+  font-family: Poppins, sans-serif;
+}
+
+/* SPLASH SCREEN */
+
+.splash-div {
+  height: 1080px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.splash-div h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 150px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  color: orangered;
+}
+
+.splash-div button {
+  border-radius: 10px;
+  margin: 100px;
+  padding: 20px 30px;
+  font-size: 4rem;
+  background-color: orangered;
+  border-style: none;
+  width: 500px;
+  color: blacks;
+  font-weight: 700;
+}
+
+.splash-square {
+  color: whitesmoke;
+  padding-bottom: 40px;
+
+  border: orangered solid 3px;
+  width: 50%;
+  text-align: center;
+}
+
+.splash-square h3 {
+  padding: 20px;
+  text-decoration: underline;
+  font-size: 5rem;
+}
+
+.splash-square p {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  font-size: 25px;
 }

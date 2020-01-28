@@ -3,6 +3,7 @@
 // Creates DOM elements from a string representation
 function buildDom(htmlString) {
   var div = document.createElement("div");
+
   div.innerHTML = htmlString;
   return div.children[0];
 }
@@ -16,15 +17,18 @@ function main() {
   // -- splash screen
 
   function createSplashScreen() {
-    splashScreen = buildDom(`
-    <main class="splash-screen-main">
-        <div class="splash-screen-div">
-            <h1 class="splash-h1">IHATETRAFFIC</h1>
-            <p>On your way to work, you find yourself in a pretty bad situation. </p>
-            <p>You are late, and by mistake you are driving on the wrong side of the road</p>
-            <button type="button" class="start-button">Let's Go</button>
-        </div>
-    </main>
+    splashScreen = buildDom(`  <div class="splash-main">
+    <div class="splash-div">
+      <h1>I HATE TRAFFIC</h1>
+      <button type="button" class="start-button">LET'S RIDE</button>
+      <div class="splash-square">
+        <h3>HOW TO PLAY</h3>
+        <p>1. Move Left and Right with Left and Right arrow</p>
+        <p>2. Dodge the incoming cars, collect bonuses and increase your score</p>
+        <p>3. You only have 3 lives</p>
+      </div>
+    </div>
+  </div>
     `);
 
     document.body.appendChild(splashScreen);
@@ -75,7 +79,7 @@ function main() {
       <h1 class="game-over-h1">Game over</h1>
       <p class = 'score'>Your score: <span></span></p>
       <p>Thanks for trying.</p>
-      <p>You died and also didn't make it to work in time</p>
+      <p>You died. Also, you didn't make it to work in time</p>
       <button type="button" class="restart-button">RESTART</button>
     </div>
     </main>
