@@ -17,11 +17,15 @@ function main() {
 
   function createSplashScreen() {
     splashScreen = buildDom(`
-    <main>
-      <h1>I HATE TRAFFIC</h1>
-      <button>Ready to ride</button>
+    <main class="splash-screen-main">
+        <div class="splash-screen-div">
+            <h1 class="splash-h1">IHATETRAFFIC</h1>
+            <p>On your way to work, you find yourself in a pretty bad situation. </p>
+            <p>You are late, and by mistake you are driving on the wrong side of the road</p>
+            <button type="button" class="start-button">Let's Go</button>
+        </div>
     </main>
-  `);
+    `);
 
     document.body.appendChild(splashScreen);
     var startButton = splashScreen.querySelector("button");

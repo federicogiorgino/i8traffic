@@ -1,4 +1,6 @@
 /* ---- reset ---- */
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
 
 html {
   box-sizing: border-box;
@@ -31,6 +33,7 @@ p {
 
 html,
 body {
+  background: #4f4e4e;
   height: 100%;
 }
 
@@ -78,15 +81,52 @@ body {
 
 .game .canvas-container {
   flex: 1;
-  /* background-image: url("../img/background.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover; */
 }
 
-/* canvas {
-  background-image: url("../img/background.png");
+.splash-screen-main {
+  height: 1080px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("https://chelsielamie.com/wp-content/uploads/2017/12/EP-150519880-1140x748.jpg");
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
-} */
+  background-position: center;
+}
+
+.splash-screen-div {
+  margin-top: 300px;
+  /* margin-right: 50%; */
+  padding: 0px 30px 40px 30px;
+  font-size: 1.5rem;
+  background: #4f4e4e;
+  border-radius: 15px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  font-family: poppins;
+  color: white;
+}
+
+.splash-h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 4rem;
+  color: red;
+  padding-top: 30px;
+}
+
+.splash-screen-div p {
+  padding: 10px;
+}
+
+.start-button {
+  margin-top: 80px;
+  padding: 20px;
+  width: 200px;
+  font-size: 28px;
+  font-family: Poppins;
+  font-weight: bold;
+  border-radius: 5%;
+  cursor: pointer;
+  background-color: whitesmoke;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}

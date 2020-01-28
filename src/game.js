@@ -9,8 +9,9 @@ function Game() {
   this.gameScreen = null;
   this.img = new Image();
   this.img.src = "./img/background1.png";
-  // this.carImg = new Image();
   this.columnX = [85, 255, 450, 640];
+  this.crashSFX = new Audio("./audio/carcrash1.wav");
+  this.themeMusic = new Audio("./audio/theme1.wav");
 }
 
 //Canvas Background
@@ -51,7 +52,9 @@ Game.prototype.start = function() {
   // this.containerHeight = this.canvasContainer.offsetHeight;
   this.canvas.setAttribute("width", 750);
   this.canvas.setAttribute("height", 1025);
-
+  this.themeMusic.play();
+  this.themeMusic.volume = 0.2;
+  this.themeMusic.loop = true;
   // Create a new player for the current game
   this.player = new Player(this.canvas, 3); //	<-- UPDATE
 
@@ -74,8 +77,6 @@ Game.prototype.start = function() {
   };
   // Add event listener for moving the player
   document.body.addEventListener("keydown", this.handleKeyDown.bind(this));
-  // Add event listener for moving the player
-  // Start the canvas requestAnimationFrame loop
   this.startLoop();
 };
 
@@ -83,24 +84,24 @@ Game.prototype.startLoop = function() {
   var loop = function() {
     // 1. Create new enemies randomly
     // var columnX = [85, 255, 450, 640];
-    if (Math.random() > 0.98) {
+    if (Math.random() > 0.99) {
       setTimeout(() => {
         var randomX = this.columnX[Math.floor(Math.random() * 5)];
         for (let index = 0; index < this.canvas.height / 4; index += this.canvas.height / 2.5) {
           //enemy creation
-          var newEnemy = new Enemy(this.canvas, randomX, 3, "./img/car1.png");
+          var newEnemy = new Enemy(this.canvas, randomX, 4, "./img/car1.png");
           this.enemies.push(newEnemy);
         }
-      }, 1500);
+      }, 2000);
     } else if (Math.random() > 0.99) {
       setTimeout(() => {
         var randomX = this.columnX[Math.floor(Math.random() * 5)];
         for (let index = 0; index < this.canvas.height / 4; index += this.canvas.height / 2.5) {
           //enemy creation
-          var newEnemy = new Enemy(this.canvas, randomX, 10, "./img/car2.png");
+          var newEnemy = new Enemy(this.canvas, randomX, 4, "./img/car2.png");
           this.enemies.push(newEnemy);
         }
-      }, 1500);
+      }, 2000);
     }
 
     // if on column 1 enemyhaspawned , wait .5 sec to spawn again
@@ -144,7 +145,11 @@ Game.prototype.startLoop = function() {
 Game.prototype.checkCollisions = function() {
   this.enemies.forEach(function(enemy) {
     if (this.player.didCollide(enemy)) {
+      this.crashSFX.volume = 0.5;
+      this.crashSFX.play();
       this.player.removeLife();
+      // this.player.x = this.canvas.width / 2;
+      // this.player.y = this.canvas.height - 100;
       enemy.y = 0 - enemy.height;
       if (this.player.lives === 0) {
         this.gameOver();

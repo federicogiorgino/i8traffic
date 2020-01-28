@@ -11,7 +11,7 @@ function Player(canvas, lives) {
   this.x = canvas.width / 2;
   this.y = canvas.height - 100;
   this.direction = 0;
-  this.speed = 3;
+  this.speed = 6;
 }
 
 Player.prototype.setDirection = function(direction) {
