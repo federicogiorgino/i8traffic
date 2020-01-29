@@ -1,15 +1,15 @@
 "use strict";
 
-function Truck(canvas, x, speed, imageSrc) {
+function Bikes(canvas, x, speed, imageSrc) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
-  this.height = 150;
-  this.width = 55;
+  this.height = 250;
+  this.width = 125;
   this.x = x;
   this.y = 0 - this.height;
   this.speed = speed;
-  this.truckImage = new Image();
-  this.truckImage.src = imageSrc;
+  this.bikeImage = new Image();
+  this.bikeImage.src = imageSrc;
 }
 
 Truck.prototype.draw = function() {

@@ -1,6 +1,6 @@
 "use strict";
 
-function Bonus(canvas, x, speed, imageSrc) {
+function Bonus(canvas, x, speed) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
   this.height = 80;
@@ -9,17 +9,17 @@ function Bonus(canvas, x, speed, imageSrc) {
   this.y = 0 - this.height;
   this.speed = speed;
   this.bonusImage = new Image();
-  this.bonusImage.src = imageSrc;
+  this.bonusImage.src = "./img/bolt_gold.png";
 }
 
-Truck.prototype.draw = function() {
-  this.ctx.drawImage(this.bonusImage, this.x, this, y, this.width, this.height);
+Bonus.prototype.draw = function() {
+  this.ctx.drawImage(this.bonusImage, this.x, this.y, this.width, this.height);
 };
 
-Truck.prototype.updatePosition = function() {
+Bonus.prototype.updatePosition = function() {
   this.y += this.speed;
 };
 
-Truck.prototype.isInsideScreen = function() {
+Bonus.prototype.isInsideScreen = function() {
   return this.x + this.height / 2 > 0;
 };

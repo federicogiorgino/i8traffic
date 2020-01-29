@@ -67,24 +67,19 @@ function main() {
   function removeGameScreen() {
     game.removeGameScreen();
   }
-  // <h1>Game over</h1>
-  // <p>Your score: <span></span></p>
-  // <button>Restart</button>
-
-  // -- game over screen
   function createGameOverScreen(score) {
     gameOverScreen = buildDom(`
     <div class="game-over-main">
     <div class="game-over-div">
-      <h1>GAME OVER</h1>
-      <div class="game-over-square">
-        <h3>YOU DIED</h3>
-        <p>ALSO, YOU DID NOT MAKE IT TO WORK IN TIME</p>
-        <p class="score">Your score: <span></span></p>
-        <button type="button" class="restart-button">START OVER</button>
-      </div>
+    <h1>GAME OVER</h1>
+    <div class="game-over-square">
+    <h3>YOU DIED</h3>
+    <p>ALSO, YOU DID NOT MAKE IT TO WORK IN TIME</p>
+    <p class="score">Your score: <span></span></p>
+    <button type="button" class="restart-button">START OVER</button>
     </div>
-  </div>
+    </div>
+    </div>
     `);
     var button = gameOverScreen.querySelector("button");
     button.addEventListener("click", startGame);
@@ -126,14 +121,18 @@ function main() {
 // Runs the function `main` once all resources are loaded
 window.addEventListener("load", main);
 
-{
-  /* <main class='game-over-screen'>
-<div class="game-over-screen-div">
-<h1 class="game-over-h1">Game over</h1>
-<p class = 'score'>Your score: <span></span></p>
-<p>Thanks for trying.</p>
-<p>You died. Also, you didn't make it to work in time</p>
-<button type="button" class="restart-button">RESTART</button>
-</div>
-</main> */
-}
+/* <main class='game-over-screen'>
+  <div class="game-over-screen-div">
+  <h1 class="game-over-h1">Game over</h1>
+  <p class = 'score'>Your score: <span></span></p>
+  <p>Thanks for trying.</p>
+  <p>You died. Also, you didn't make it to work in time</p>
+  <button type="button" class="restart-button">RESTART</button>
+  </div>
+  </main> */
+
+// <h1>Game over</h1>
+// <p>Your score: <span></span></p>
+// <button>Restart</button>
+
+// -- game over screen

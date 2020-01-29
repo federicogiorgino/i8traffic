@@ -4,18 +4,41 @@ function Game() {
   this.canvas = null;
   this.ctx = null;
   this.enemies = [];
+  this.bonus = [];
   this.player = null;
   this.gameIsOver = false;
   this.gameScreen = null;
-  this.img = new Image();
-  this.img.src = "./img/background1.png";
-  this.columnX = [85, 255, 450, 640];
+  // this.img = new Image();
+  // this.img.src = "./img/Asset1.png";
+  this.columnX = [80, 260, 440, 620];
   this.columnIsBusy = [false, false, false, false];
   this.crashSFX = new Audio("./audio/carcrash1.wav");
   this.themeMusic = new Audio("./audio/theme1.wav");
   this.hornSFX = new Audio("./audio/clacson.wav");
   this.score = 0;
 }
+var img = new Image();
+img.src = "./img/Asset1.png";
+
+var backgroundImage = {
+  img: img,
+  y: 0,
+  speed: 16,
+
+  move: function(canvas) {
+    this.y += this.speed;
+    this.y %= canvas.height;
+  },
+
+  draw: function(canvas, ctx) {
+    ctx.drawImage(this.img, 0, this.y, canvas.width, canvas.height);
+    if (this.speed < 0) {
+      ctx.drawImage(this.img, 0, this.y + canvas.height, canvas.width, canvas.height);
+    } else {
+      ctx.drawImage(this.img, 0, this.y - this.img.height, canvas.width, canvas.height);
+    }
+  }
+};
 
 // Create `ctx`, a `player` and start the Canvas loop
 Game.prototype.start = function() {
@@ -32,11 +55,8 @@ Game.prototype.start = function() {
   // this.containerWidth = this.canvasContainer.offsetWidth;
   // this.containerHeight = this.canvasContainer.offsetHeight;
   this.canvas.setAttribute("width", 750);
-  this.canvas.setAttribute("height", 1025);
+  this.canvas.setAttribute("height", 1202);
 
-  this.themeMusic.play();
-  this.themeMusic.volume = 0.2;
-  this.themeMusic.loop = true;
   // Create a new player for the current game
   this.player = new Player(this.canvas, 3);
 
@@ -50,6 +70,7 @@ Game.prototype.start = function() {
       this.player.setDirection("right");
     } else if (event.which === 32) {
       this.hornSFX.play();
+      this.player.setDirection("stop");
     }
   };
   // Add event listener for moving the player
@@ -59,20 +80,25 @@ Game.prototype.start = function() {
 
 Game.prototype.startLoop = function() {
   var loop = function() {
+    this.themeMusic.play();
+    this.themeMusic.volume = 0.2;
+    this.themeMusic.loop = true;
     // 1. Create new enemies randomly
-    // var columnX = [85, 255, 450, 640];
-    // if (Math.random() > 0.97) {
-    //   this.enemySpawn();
-    // }
-    if (Math.random() > 0.98) {
+    backgroundImage.move(this.canvas);
+    if (Math.random() > 0.94) {
       var randomNum = Math.random();
-      if (randomNum > 0.2 && randomNum < 0.6) {
+      if (randomNum > 0 && randomNum < 0.4) {
         this.enemySpawn("./img/car1.png");
-      } else if (randomNum > 0.6 && randomNum < 1) {
+      } else if (randomNum > 0.4 && randomNum < 0.7) {
         this.truckSpawn("./img/truck1.png");
+      } else if (randomNum > 0.7 && randomNum < 1) {
+        this.enemySpawn("./img/ambulance.png");
       }
     }
 
+    if (Math.random() > 0.998) {
+      this.bonusSpawn();
+    }
     // 2. Check if player had hit any enemy (check all enemies)
     this.checkCollisions();
     // 3. Check if player is going off the screen
@@ -82,27 +108,28 @@ Game.prototype.startLoop = function() {
       enemy.updatePosition();
       return enemy.isInsideScreen();
     });
+    // 6. Check if any bonus is going off the screen
+    this.bonus = this.bonus.filter(function(bonus) {
+      bonus.updatePosition();
+      return bonus.isInsideScreen();
+    });
 
-    // this.enemies = this.enemies.filter(function(truck) {
-    //   truck.updatePosition();
-    //   return truck.isInsideScreen();
-    // });
     // 2. CLEAR THE CANVAS
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     // 3. UPDATE THE CANVAS
     //Draw the background
-    this.ctx.drawImage(this.img, 0, 0, 750, 1025);
+    // this.ctx.drawImage(this.img, 0, 0, 750, 1025);
+    backgroundImage.draw(this.canvas, this.ctx);
     // Draw the player
     this.player.draw();
     // Draw the enemies
     this.enemies.forEach(function(enemy) {
       enemy.draw();
     });
-
-    // this.enemies.forEach(function(truck) {
-    //   truck.draw();
-    // });
-
+    // draw the bonus
+    this.bonus.forEach(function(bonus) {
+      bonus.draw();
+    });
     // 4. TERMINATE LOOP IF GAME IS OVER
     if (!this.gameIsOver) {
       window.requestAnimationFrame(loop);
@@ -119,11 +146,21 @@ Game.prototype.checkCollisions = function() {
       this.crashSFX.play();
       this.player.removeLife();
       enemy.y = 0 - enemy.height;
-      if (this.player.lives === 0) {
-        this.gameOver();
-      }
     }
   }, this);
+
+  this.bonus.forEach(function(bonus) {
+    if (this.player.didCollide(bonus)) {
+      // this.crashSFX.volume = 0.5;
+      // this.crashSFX.play();
+      this.player.addLife();
+      bonus.y = 0 - bonus.height;
+    }
+  }, this);
+
+  if (this.player.lives === 0) {
+    this.gameOver();
+  }
 };
 
 Game.prototype.updateGameStats = function() {
@@ -139,6 +176,7 @@ Game.prototype.passGameOverCallback = function(gameOver) {
 Game.prototype.gameOver = function() {
   this.gameIsOver = true;
   this.onGameOverCallback();
+  this.themeMusic.pause();
 };
 
 Game.prototype.removeGameScreen = function() {
@@ -153,7 +191,7 @@ Game.prototype.enemySpawn = function(imgSrc) {
 
   if (randomXIsBusy) return;
 
-  var newEnemy = new Enemy(this.canvas, randomX, 4, imgSrc);
+  var newEnemy = new Enemy(this.canvas, randomX, 10, imgSrc);
   this.columnIsBusy[randomNum] = true;
   this.enemies.push(newEnemy);
 
@@ -170,7 +208,7 @@ Game.prototype.truckSpawn = function(imgSrc) {
 
   if (randomXIsBusy) return;
 
-  var newTruck = new Truck(this.canvas, randomX, 4, imgSrc);
+  var newTruck = new Truck(this.canvas, randomX, 10, imgSrc);
   this.columnIsBusy[randomNum] = true;
   this.enemies.push(newTruck);
 
@@ -179,11 +217,36 @@ Game.prototype.truckSpawn = function(imgSrc) {
   }, 1200);
 };
 
-// if on column 1 enemyhaspawned , wait .5 sec to spawn again
-// var randomNum = Math.random();
+Game.prototype.bikeSpawn = function(imgSrc) {
+  var randomNum = Math.floor(Math.random() * 4);
+  console.log(randomNum);
+  var randomX = this.columnX[randomNum];
+  var randomXIsBusy = this.columnIsBusy[randomNum];
 
-// if (randomNum > 0.7) {
-//   enemySpawn("./img/car1.png");
-// } else if (randomNum > 0.6) {
-//   truckSpawn(".img/truck1.png");
-// }
+  if (randomXIsBusy) return;
+
+  var newBike = new Bike(this.canvas, randomX, 10, imgSrc);
+  this.columnIsBusy[randomNum] = true;
+  this.enemies.push(newBike);
+
+  setTimeout(() => {
+    this.columnIsBusy[randomNum] = false;
+  }, 1200);
+};
+
+Game.prototype.bonusSpawn = function() {
+  var randomNum = Math.floor(Math.random() * 4);
+  console.log(randomNum);
+  var randomX = this.columnX[randomNum];
+  var randomXIsBusy = this.columnIsBusy[randomNum];
+
+  if (randomXIsBusy) return;
+
+  var newBonus = new Bonus(this.canvas, randomX, 10);
+  this.columnIsBusy[randomNum] = true;
+  this.bonus.push(newBonus);
+
+  setTimeout(() => {
+    this.columnIsBusy[randomNum] = false;
+  }, 1200);
+};

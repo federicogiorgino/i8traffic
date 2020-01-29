@@ -9,16 +9,15 @@ function Player(canvas, lives) {
   this.width = 46;
   this.height = 87;
   this.x = canvas.width / 2;
-  this.y = canvas.height - 100;
+  this.y = canvas.height - 200;
   this.direction = 0;
-  this.speed = 6;
+  this.speed = 3;
 }
 
 Player.prototype.setDirection = function(direction) {
   if (direction === "right") this.direction = +1;
   else if (direction === "left") this.direction = -1;
-  //   else if (direction === "up") this.direction = +1;
-  //   else if (direction === "down") this.direction = -1;
+  else if (direction === "stop") this.direction = 0;
 };
 
 Player.prototype.didCollide = function(enemy) {
@@ -45,23 +44,21 @@ Player.prototype.didCollide = function(enemy) {
 
 Player.prototype.handleScreenCollision = function() {
   this.x = this.x + this.direction * this.speed;
-  //   this.y = this.y + this.direction * this.speed;
   var screenLeft = 0;
-  var screenRight = this.canvas.width - this.playerImage.width / 2;
-  //   var screenTop = 0;
-  //   var screenBottom = this.canvas.height;
+  var screenRight = this.canvas.width - this.playerImage.width / 3;
 
   if (this.x > screenRight) this.direction = -1;
   else if (this.x < screenLeft) this.direction = 1;
-  //   else if (this.y > screenTop) this.direction = 1;
-  //   else if (this.y < screenBottom) this.direction = -1;
 };
 
 Player.prototype.removeLife = function() {
   this.lives -= 1;
 };
 
+Player.prototype.addLife = function() {
+  this.lives += 1;
+};
+
 Player.prototype.draw = function() {
-  // fillRect(x, y, width, height)
   this.ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height);
 };
