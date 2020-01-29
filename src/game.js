@@ -52,8 +52,6 @@ Game.prototype.start = function() {
   this.scoreElement = this.gameScreen.querySelector(".score .value");
 
   // Set the canvas dimensions to match the parent
-  // this.containerWidth = this.canvasContainer.offsetWidth;
-  // this.containerHeight = this.canvasContainer.offsetHeight;
   this.canvas.setAttribute("width", 750);
   this.canvas.setAttribute("height", 1202);
 
@@ -85,19 +83,17 @@ Game.prototype.startLoop = function() {
     this.themeMusic.loop = true;
     // 1. Create new enemies randomly
     backgroundImage.move(this.canvas);
-    if (Math.random() > 0.94) {
+    if (Math.random() > 0.9) {
       var randomNum = Math.random();
-      if (randomNum > 0 && randomNum < 0.4) {
-        this.enemySpawn("./img/car1.png");
+      if (randomNum > 0 && randomNum < 0.02) {
+        this.bonusSpawn();
+      } else if (randomNum > 0.02 && randomNum < 0.4) {
+        this.enemySpawn("./img/maincar2.png");
       } else if (randomNum > 0.4 && randomNum < 0.7) {
         this.truckSpawn("./img/truck1.png");
       } else if (randomNum > 0.7 && randomNum < 1) {
         this.enemySpawn("./img/ambulance.png");
       }
-    }
-
-    if (Math.random() > 0.998) {
-      this.bonusSpawn();
     }
     // 2. Check if player had hit any enemy (check all enemies)
     this.checkCollisions();
