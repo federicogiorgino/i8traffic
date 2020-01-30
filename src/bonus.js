@@ -3,13 +3,13 @@
 function Bonus(canvas, x, speed) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
-  this.height = 80;
-  this.width = 45;
+  this.height = 50;
+  this.width = 50;
   this.x = x;
   this.y = 0 - this.height;
   this.speed = speed;
   this.bonusImage = new Image();
-  this.bonusImage.src = "./img/bolt_gold.png";
+  this.bonusImage.src = "./img/life.png";
 }
 
 Bonus.prototype.draw = function() {

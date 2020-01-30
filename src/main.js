@@ -59,7 +59,6 @@ function main() {
       </div>
     </main>
   `);
-
     document.body.appendChild(gameScreen);
     return gameScreen;
   }
@@ -75,7 +74,7 @@ function main() {
     <div class="game-over-square">
     <h3>YOU DIED</h3>
     <p>ALSO, YOU DID NOT MAKE IT TO WORK IN TIME</p>
-    <p class="score">Your score: <span></span></p>
+    <p class="score">Your score: <span class="value"> ${game.score} </span></p>
     <button type="button" class="restart-button">START OVER</button>
     </div>
     </div>
@@ -94,7 +93,6 @@ function main() {
       gameOverScreen.remove();
     }
   }
-
   // -- Setting the game state
   function startGame() {
     removeSplashScreen();
@@ -102,37 +100,17 @@ function main() {
     game = new Game();
     game.gameScreen = createGameScreen();
     game.start();
-
     // game.passGameOverCallback(gameOver);
     game.passGameOverCallback(function() {
       gameOver(game.score);
     });
   }
-
   function gameOver(score) {
     removeGameScreen();
     createGameOverScreen();
   }
-
   // -- initialize Splash screen on initial start
   createSplashScreen();
 }
-
 // Runs the function `main` once all resources are loaded
 window.addEventListener("load", main);
-
-/* <main class='game-over-screen'>
-  <div class="game-over-screen-div">
-  <h1 class="game-over-h1">Game over</h1>
-  <p class = 'score'>Your score: <span></span></p>
-  <p>Thanks for trying.</p>
-  <p>You died. Also, you didn't make it to work in time</p>
-  <button type="button" class="restart-button">RESTART</button>
-  </div>
-  </main> */
-
-// <h1>Game over</h1>
-// <p>Your score: <span></span></p>
-// <button>Restart</button>
-
-// -- game over screen
