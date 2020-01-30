@@ -15,10 +15,12 @@ function Game() {
   this.crashSFX = new Audio("./audio/crash1.flac");
   this.themeMusic = new Audio("./audio/theme2.mp3");
   this.hornSFX = new Audio("./audio/clacson.wav");
-  this.brakeSFK = new Audio("./audio/brake.wav");
-  this.bonusSFX = new Audio("./audio/powerup.wav");
+  this.brakeSFK = new Audio("./audio/clacson.wav");
+  this.bonusSFX = new Audio("./audio/wow.mp3");
   this.speedSFX = new Audio("./audio/nitro.wav");
   this.accelerationSFX = new Audio("./audio/acceleration.wav");
+  this.driftRight = new Audio("./audio/driftright.mp3");
+  this.driftLeft = new Audio("./audio/driftleft.mp3");
   this.score = 0;
 }
 
@@ -67,8 +69,14 @@ Game.prototype.start = function() {
   this.handleKeyDown = function(event) {
     if (event.key === "ArrowLeft") {
       this.player.setDirection("left");
+      this.driftLeft.play();
+      this.driftLeft.currentTime = 0;
+      this.driftLeft.volume = 0.2;
     } else if (event.key === "ArrowRight") {
       this.player.setDirection("right");
+      this.driftRight.play();
+      this.driftRight.currentTime = 0;
+      this.driftRight.volume = 0.2;
     } else if (event.which === 32) {
       this.brakeSFK.play();
       this.brakeSFK.currentTime = 0;
@@ -178,9 +186,11 @@ Game.prototype.checkCollisions = function() {
   this.bonus.forEach(function(bonus) {
     if (this.player.didCollide(bonus)) {
       this.bonusSFX.play();
-      this.bonusSFX.volume = 0.7;
+      this.bonusSFX.volume = 1;
       this.bonusSFX.currentTime = 0;
-      this.player.addLife();
+      if (this.player.lives < 6) {
+        this.player.addLife();
+      }
       bonus.y = 0 - bonus.height;
     }
   }, this);
@@ -220,7 +230,7 @@ Game.prototype.passGameOverCallback = function(gameOver) {
 
 Game.prototype.gameOver = function() {
   this.gameIsOver = true;
-  this.onGameOverCallback();
+  this.onGameOverCallback(this.score);
   this.themeMusic.pause();
   this.accelerationSFX.pause();
 };

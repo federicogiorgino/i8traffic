@@ -13,6 +13,7 @@ function main() {
   var game; // instance of the Game
   var splashScreen; // Start Screen
   var gameOverScreen;
+  var gameWinScreen;
 
   // -- splash screen
 
@@ -44,19 +45,20 @@ function main() {
   function createGameScreen() {
     var gameScreen = buildDom(`
     <main class="game container">
-      <header>
+      
         <div class="lives">
           <span class="label">Lives:</span>
           <span class="value"></span>
         </div>
+        <div class="canvas-container">
+      <canvas></canvas>
+      </div>
         <div class="score">
           <span class="label">Score:</span>
           <span class="value"></span>
         </div>
-      </header>
-      <div class="canvas-container">
-        <canvas></canvas>
-      </div>
+      
+     
     </main>
   `);
     document.body.appendChild(gameScreen);
@@ -74,7 +76,7 @@ function main() {
     <div class="game-over-square">
     <h3>YOU DIED</h3>
     <p>ALSO, YOU DID NOT MAKE IT TO WORK IN TIME</p>
-    <p class="score">Your score: <span class="value"> ${game.score} </span></p>
+    <p class="score">Your score: <span> ${score} </span></p>
     <button type="button" class="restart-button">START OVER</button>
     </div>
     </div>
@@ -93,21 +95,54 @@ function main() {
       gameOverScreen.remove();
     }
   }
+
+  //- game winning screen
+  function createGameWinningScreen(score) {
+    gameWinScreen = buildDom(`
+    <div class="game-over-main">
+    <div class="game-over-div">
+    <h1>YOU WON</h1>
+    <div class="game-over-square">
+    <h3>YOU DID NOT DIE</h3>
+    <p>ALSO, YOU MADE IT TO WORK IN TIME</p>
+    <p class="score">Your score: <span> ${score} </span></p>
+    <button type="button" class="restart-button">PLAY AGAIN</button>
+    </div>
+    </div>
+    </div>
+    `);
+    var button = gameWinScreen.querySelector("button");
+    button.addEventListener("click", startGame);
+
+    var span = gameOverScreen.querySelector("span");
+    span.innerText = score;
+
+    document.body.appendChild(gameOverScreen);
+  }
+
+  function removeGameWinningScreen() {
+    if (gameWinScreen !== undefined) {
+      gameWinScreen.remove();
+    }
+  }
   // -- Setting the game state
   function startGame() {
     removeSplashScreen();
     removeGameOverScreen();
+    // removeGameWinningScreen()
     game = new Game();
     game.gameScreen = createGameScreen();
     game.start();
     // game.passGameOverCallback(gameOver);
     game.passGameOverCallback(function() {
+      console.log(`gamescore is ${game.score}`);
       gameOver(game.score);
     });
   }
   function gameOver(score) {
     removeGameScreen();
-    createGameOverScreen();
+    // removeGameWinningScreen();
+    createGameOverScreen(score);
   }
   // -- initialize Splash screen on initial start
   createSplashScreen();

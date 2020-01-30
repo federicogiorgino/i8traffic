@@ -12,6 +12,7 @@ html {
 
 body {
   margin: 0;
+  overflow: hidden;
   padding: 0;
 }
 
@@ -50,8 +51,6 @@ body {
 /* GAME ELEMENTS */
 .game {
   text-align: center;
-  display: flex;
-  flex-direction: column;
   height: 9%;
 }
 
@@ -182,4 +181,18 @@ body {
 canvas {
   border: 10px solid black;
   border-radius: 10px;
+}
+
+.game.container {
+  background-color: #4f4e4e;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game.container .lives,
+.game.container .score {
+  font-size: 5rem;
+  text-transform: uppercase;
 }

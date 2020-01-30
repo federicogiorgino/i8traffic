@@ -6,8 +6,8 @@ function Player(canvas, lives) {
   this.lives = lives;
   this.playerImage = new Image();
   this.playerImage.src = "./img/maincar.png";
-  this.width = 45;
-  this.height = 89;
+  this.width = 65;
+  this.height = 119;
   this.x = canvas.width / 2;
   this.y = canvas.height - 200;
   this.direction = 0;

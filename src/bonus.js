@@ -3,8 +3,8 @@
 function Bonus(canvas, x, speed) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
-  this.height = 50;
-  this.width = 50;
+  this.height = 70;
+  this.width = 70;
   this.x = x;
   this.y = 0 - this.height;
   this.speed = speed;

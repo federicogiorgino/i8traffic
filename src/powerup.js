@@ -3,8 +3,8 @@
 function PowerUp(canvas, x, speed) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
-  this.height = 40;
-  this.width = 40;
+  this.height = 70;
+  this.width = 70;
   this.x = x;
   this.y = 0 - this.height;
   this.speed = speed;
