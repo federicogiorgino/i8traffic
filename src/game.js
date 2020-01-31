@@ -18,6 +18,7 @@ function Game() {
   this.brakeSFK = new Audio("./audio/clacson.wav");
   this.bonusSFX = new Audio("./audio/wow.mp3");
   this.speedSFX = new Audio("./audio/nitro.wav");
+  this.powerUpSFX = new Audio("./audio/powerup1.wav");
   this.accelerationSFX = new Audio("./audio/acceleration.wav");
   this.driftRight = new Audio("./audio/driftright.mp3");
   this.driftLeft = new Audio("./audio/driftleft.mp3");
@@ -71,14 +72,15 @@ Game.prototype.start = function() {
       this.player.setDirection("left");
       this.driftLeft.play();
       this.driftLeft.currentTime = 0;
-      this.driftLeft.volume = 0.2;
+      this.driftLeft.volume = 0.1;
     } else if (event.key === "ArrowRight") {
       this.player.setDirection("right");
       this.driftRight.play();
       this.driftRight.currentTime = 0;
-      this.driftRight.volume = 0.2;
+      this.driftRight.volume = 0.1;
     } else if (event.which === 32) {
       this.brakeSFK.play();
+      this.brakeSFK.volume = 0.3;
       this.brakeSFK.currentTime = 0;
       this.player.setDirection("stop");
     }
@@ -100,7 +102,7 @@ Game.prototype.startLoop = function() {
     // 1. Create new enemies randomly
     backgroundImage.move(this.canvas);
 
-    if (Math.random() > 0.88) {
+    if (Math.random() > 0.9) {
       var randomNum = Math.random();
       if (randomNum > 0 && randomNum < 0.02) {
         this.bonusSpawn();
@@ -175,7 +177,7 @@ Game.prototype.startLoop = function() {
 Game.prototype.checkCollisions = function() {
   this.enemies.forEach(function(enemy) {
     if (this.player.didCollide(enemy)) {
-      this.crashSFX.volume = 0.5;
+      this.crashSFX.volume = 0.2;
       this.crashSFX.play();
       this.player.removeLife();
       this.player.speed = 3;
@@ -197,7 +199,9 @@ Game.prototype.checkCollisions = function() {
 
   this.powerUp.forEach(function(powerUp) {
     if (this.player.didCollide(powerUp)) {
-      // this.powerUpSFX.currentTime = 0;
+      this.powerUpSFX.play();
+      this.powerUpSFX.currentTime = 0;
+      this.powerUpSFX.volume = 0.3;
       this.score += 2000;
       powerUp.y = 0 - powerUp.height;
     }

@@ -3,8 +3,8 @@
 function Truck(canvas, x, speed, imageSrc) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
-  this.height = 150;
-  this.width = 55;
+  this.height = 250;
+  this.width = 85;
   this.x = x;
   this.y = 0 - this.height;
   this.speed = speed;

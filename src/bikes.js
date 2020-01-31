@@ -3,8 +3,8 @@
 function Ambulance(canvas, x, speed, imageSrc) {
   this.canvas = canvas;
   this.ctx = canvas.getContext("2d");
-  this.height = 125;
-  this.width = 65;
+  this.height = 150;
+  this.width = 75;
   this.x = x;
   this.y = 0 - this.height;
   this.speed = speed;
